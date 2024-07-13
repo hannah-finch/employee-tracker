@@ -51,6 +51,9 @@ function init () {
       case 'View All Employees': // works
         sql = 'SELECT * FROM employee';
         pool.query(sql, function (err, {rows}) {
+          if (err) {
+            console.log(err);
+          }
           console.table(rows);
         })
         break;
@@ -73,14 +76,26 @@ function init () {
       case 'Update Employee Role': // not started
         // stuff
         break;
-      case 'View all Roles':// not started
-        // stuff
+      case 'View all Roles':// works
+        sql = 'SELECT * FROM role';
+        pool.query(sql, function (err, {rows}) {
+          if (err) {
+            console.log(err);
+          }
+          console.table(rows);
+        })
         break;
       case 'Add Role':// not started
         // stuff
         break;
-      case 'View All Departments':// not started
-        // stuff
+      case 'View All Departments':// works
+        sql = 'SELECT * FROM department';
+        pool.query(sql, function (err, {rows}) {
+          if (err) {
+            console.log(err);
+          }
+          console.table(rows);
+        })
         break;
       case 'Add Department':// not started
         // stuff
