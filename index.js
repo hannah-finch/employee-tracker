@@ -2,11 +2,15 @@ const inquirer = require('inquirer');
 const express = require('express');
 const { Pool } = require('pg');
 const app = express();
+
+// import function that gets
+const getEmployeeInfo = require('./lib/getEmployeeInfo');
+
 const questions = [
   {
   type: 'list',
   message: 'What would you like to do?',
-  name: 'choice', //?
+  name: 'choice',
   choices: [
       'View All Employees', 
       'Add Employee',
@@ -28,8 +32,11 @@ const pool = new Pool(
     password: 'hannarue',
     host: 'localhost',
     database: 'employees_db'
-  }
+  },
+  console.log('Connected to employee database')
 )
+
+pool.connect();
 
 function init () {
   inquirer
@@ -43,13 +50,14 @@ function init () {
 // next  is switch statement for questions
 // how to get chart to show? console.chart(variable)
 
-// pool.query(sql, function (err, {rows}) {
-//   if (err) {
-//     console.log(err)
-//   }
-//   console.table(rows);
-// })
-
+function test() {
+  pool.query(function (err, {rows}) {
+    if (err) {
+      console.log(err)
+    }
+    console.table(rows);
+  })
+}
 // 'View All Employees', 
 // 'Add Employee',
 // 'Update Employee Role',
