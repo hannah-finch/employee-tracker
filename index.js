@@ -6,7 +6,8 @@ const { Pool } = require('pg');
 const app = express();
 
 
-const getEmployeeInfo = require('./lib/getEmployeeInfo');
+const addEmployee = require('./lib/addEmployee');
+const addDepartment = require('./lib/addDepartment');
 
 const questions = [
   {
@@ -40,7 +41,7 @@ const pool = new Pool(
 
 pool.connect();
 
-
+// idk, maybe I could use a while loop or something to keep prompting until they hit quit
 function init () {
   inquirer
   .prompt(questions)
@@ -58,11 +59,8 @@ function init () {
         })
         break;
       case 'Add Employee': // works
-        // uses getEmployeeInfo function to prompt for info and saves in a string for sql
-        // There's an extra variable here, I can just make employeeInfo be sql and whatever, can't explain but I know in my head, do it later
-        getEmployeeInfo().then((employeeInfo) => {
-          sql = employeeInfo;
-          console.log(sql);
+        // uses addEmployee function to prompt for info and saves in database
+        addEmployee().then((sql) => {
           pool.query(sql, (err) => {
             if (err) {
               console.log(err);
@@ -71,7 +69,6 @@ function init () {
             console.log("Employee added");
           })
         })
-        // do a query thingy to put into database
         break;
       case 'Update Employee Role': // not started
         // stuff
@@ -97,8 +94,16 @@ function init () {
           console.table(rows);
         })
         break;
-      case 'Add Department':// not started
-        // stuff
+      case 'Add Department':// works
+        addDepartment().then((sql) => {
+          pool.query(sql, (err) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log("Department added");
+          })
+        })
         break;
       case 'Quit':// not started
         // stuff
