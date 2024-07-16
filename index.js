@@ -9,6 +9,7 @@ const app = express();
 const addEmployee = require('./lib/addEmployee');
 const addDepartment = require('./lib/addDepartment');
 const addRole = require('./lib/addRole');
+const updateEmployee = require('./lib/updateEmployee');
 
 const questions = [
   {
@@ -73,8 +74,17 @@ function init () {
           })
         })
         break;
-      case 'Update Employee Role': // not started
+      case 'Update Employee Role':
         // stuff
+        updateEmployee().then((sql) => {
+          pool.query(sql, (err) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            console.log("Employee updated");
+          })
+        })
         break;
       case 'View all Roles':
         sql = 'SELECT * FROM role';
@@ -117,7 +127,7 @@ function init () {
         })
         break;
       case 'Quit':// not started
-        // stuff
+      process.exit()
         break;
       default:
         return;
