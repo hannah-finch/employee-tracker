@@ -53,10 +53,9 @@ const run= () => {
           if (err) {
             console.log(err);
           }
-          // console.table(rows);
+          console.table(rows);
         })
-        console.log('thing')
-        process.exit()
+
         break;
       case 'Add Employee':
         // uses addEmployee function to prompt for info and saves in database
